@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
@@ -43,9 +44,13 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load('issues'); 
-        return view('projects.show', compact('project'));
+        $project->load('issues.tags'); 
+        $issues = $project->issues;
+        $tags = Tag::all();
+    
+        return view('projects.show', compact('project', 'issues','tags'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.

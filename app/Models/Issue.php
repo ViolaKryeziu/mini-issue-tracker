@@ -18,6 +18,10 @@ class Issue extends Model
         'due_date'    
     ];
 
+    protected $casts = [
+        'due_date' => 'date',
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -32,9 +36,9 @@ class Issue extends Model
     {
         return $this->belongsToMany(Tag::class, 'issue_tag');
     }
-    public function users()
+    public function members()
 {
-    return $this->belongsToMany(User::class);
+    return $this->belongsToMany(User::class, 'issue_user', 'issue_id', 'user_id');
 }
 
 }
